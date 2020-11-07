@@ -63,12 +63,12 @@ export class formatCurrency extends SchemaDirectiveVisitor {
       type: RoundingMode
     } as GraphQLArgument)
 
-    field.resolve = async function (
+    field.resolve = async (
       source,
       { format, currency, roundingMode, ...args },
       context,
       info
-    ) {
+    ) => {
       const result = await resolve.call(this, source, args, context, info)
       const transform = (input: number) => {
         const config: dinero.Options = { amount: input }
