@@ -52,12 +52,12 @@ class createUnitDirective extends SchemaDirectiveVisitor {
     } as GraphQLArgument)
     field.args.push({ name: `raw`, type: GraphQLBoolean } as GraphQLArgument)
 
-    field.resolve = async function (
+    field.resolve = async (
       source,
       { convertTo, raw, ...args },
       context,
       info
-    ) {
+    ) => {
       const result = await resolve.call(this, source, args, context, info)
       const transform = (input: number) => {
         const value = unit(input, originalUnit).to(convertTo || originalUnit)
